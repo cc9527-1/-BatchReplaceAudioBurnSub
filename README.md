@@ -27,10 +27,12 @@ Output: _video_out/001_my_video_1080p.mp4
 
 ## Quick Start
 
-### Option 1: Use the pre-built EXE (recommended)
+### Option 1: Download the pre-built EXE (recommended)
 
-1. Download `AI视频合并工具.exe`
-2. Launch it (or use `启动.bat` to hide the console window)
+Grab the latest EXE from the **[Releases page](https://github.com/cc9527-1/-BatchReplaceAudioBurnSub/releases)**:
+
+1. Download `BatchReplaceAudioBurnSub.exe`
+2. Double-click to launch
 3. Select your video folder → Scan → select videos → START
 
 ### Option 2: Run from source
