@@ -1,0 +1,16 @@
+# PyInstaller build artifacts
+build/
+*.spec
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+venv/
+.env
+
+# OS
+Thumbs.db
+.DS_Store
