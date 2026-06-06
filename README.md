@@ -115,6 +115,82 @@ your_video_folder/
 - Fixed stderr buffer deadlock
 - Real-time progress display (0%-100%)
 
+---
+
+## 中文使用说明
+
+### 这是什么工具
+
+**批量视频配音合成工具** —— 一键完成：去除原视频音频 → 替换为翻译后的中文配音 → 烧录/嵌入中文字幕 → 缩放到目标分辨率 → HEVC 硬件编码。
+
+专门为处理翻译后的交易教育视频而设计。
+
+### 下载与使用
+
+**方法一：下载 EXE（推荐）**
+
+1. 前往 **[Releases 页面](https://github.com/cc9527-1/-BatchReplaceAudioBurnSub/releases)** 下载 `BatchReplaceAudioBurnSub.exe`
+2. 双击运行（无需安装 Python）
+3. 选择视频文件夹 → 点击 **Scan** 扫描文件 → 勾选需要处理的视频 → 点击 **START**
+
+**方法二：运行源码**
+
+```bash
+python gui.py
+```
+
+需要 Python 3.7+ 和 FFmpeg 8.0+（含 hevc_amf 编码器）。
+
+### 文件命名规则
+
+| 文件 | 命名要求 | 示例 |
+|------|---------|------|
+| 视频 | 任意 `.mp4/.mkv/.mov` 文件 | `001 如何交易黄金.mp4` |
+| 翻译音频 | 必须带 `_translated` / `_翻译` / `_zh` 等标记 | `001 如何交易黄金_translated.mp3` |
+| 翻译字幕 | 必须带 `_translated` / `_翻译` / `_zh` 等标记 | `001 如何交易黄金_translated.srt` |
+
+匹配规则：
+1. **编号前缀匹配** —— 如果视频是 `001 xxx.mp4`，自动匹配 `001 xxx_translated.mp3`
+2. **相似度匹配** —— 无编号时按文件名相似度模糊匹配
+
+### 参数设置说明
+
+| 参数 | 可选值 | 默认 |
+|------|--------|------|
+| 分辨率 | 720p / 1080p / 2K / 4K | 1080p |
+| 码率 | 4M / 6M / 8M / 10M / 12M / 15M / 20M | 8M |
+| RC 模式 | VBR (智能) / CBR (固定) / CQ (恒定质量) | VBR (智能) |
+| 编码器 | AMD GPU (hevc_amf) / CPU (libx264) | AMD GPU |
+| 并行数 | 2 / 3 / 4 / 5 / 6 | 4 |
+| 人声 EQ | 无 / 清晰 / 温暖 / 去齿音 / 会议室 | 无 |
+
+### RC 模式选哪个
+
+| 模式 | 体积 | 画质 | 推荐场景 |
+|------|------|------|---------|
+| **CQ**（恒定质量） | 最小（比 CBR 小 70%） | 优秀 | 幻灯片、录屏、PPT 类内容 |
+| **VBR**（智能码率） | 适中 | 最佳平衡 | 通用（推荐） |
+| **CBR**（固定码率） | 最大 | 最稳定 | 直播、严格限制码率的场景 |
+
+### 输出目录
+
+所有压制完成的视频输出到源文件夹下的 `_video_out/` 目录：
+
+```
+你的视频文件夹/
+├── 001 如何交易黄金.mp4
+├── 001 如何交易黄金_translated.mp3
+├── 001 如何交易黄金_translated.srt
+└── _video_out/
+    └── 001 如何交易黄金_1080p.mp4    ← 输出文件
+```
+
+### 系统要求
+
+- **Windows 系统**（AMF 硬编码需要 AMD 显卡 + Windows）
+- **FFmpeg 8.0+** —— 放到 `%LOCALAPPDATA%\ffmpeg\ffmpeg-8.0.1-essentials_build\bin\` 或添加到 PATH
+- **AMD 显卡**（可选，没有则自动降级为 CPU 编码）
+
 ## License
 
 MIT
